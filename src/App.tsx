@@ -18,7 +18,7 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
     this.state = {
       inputImage: null,
-      message: '',
+      message: 'Write text to hide in a GIF...',  // TODO: Make the placeholder disappear.
       outputImage: null,
     }
   }
