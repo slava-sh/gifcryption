@@ -7,6 +7,7 @@
     "giphy-api": "^1.2.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-images-upload": "^1.1.1",
     "react-scripts-ts": "2.7.0"
   },
   "scripts": {

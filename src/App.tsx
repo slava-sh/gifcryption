@@ -3,6 +3,7 @@ import './App.css';
 import * as stego from './stego';
 import * as Giphy from 'giphy-api';
 import Img from './Img';
+import ImageUploader from 'react-images-upload';
 
 interface AppProps {
 }
@@ -48,6 +49,15 @@ class App extends React.Component<AppProps, AppState> {
         </form>
         <div>
           <Img buffer={this.state.outputImage} download="encrypted.gif" />
+        </div>
+        <div>
+          decode:
+          <ImageUploader
+            withIcon={true}
+            buttonText='Choose images'
+            onChange={this.onDecrypt}
+            imgExtension={['.gif']}
+            maxFileSize={5242880} />
         </div>
       </div>
     );
