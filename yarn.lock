@@ -4334,6 +4334,17 @@ react-error-overlay@^2.0.1:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
+react-flip-move@^2.9.14:
+  version "2.9.15"
+  resolved "https://registry.yarnpkg.com/react-flip-move/-/react-flip-move-2.9.15.tgz#c33c817d394917c6537aba282732350bba384961"
+
+react-images-upload@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-images-upload/-/react-images-upload-1.1.1.tgz#fd7ace49df43b414326cfc0ff7535665226a71f5"
+  dependencies:
+    react "^15.6.1"
+    react-flip-move "^2.9.14"
+
 react-scripts-ts@2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/react-scripts-ts/-/react-scripts-ts-2.7.0.tgz#2417018f50e5343b5860b65c6a49049d1756c8c7"
