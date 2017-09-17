@@ -9,3 +9,11 @@ img {
 .dropzone {
   width: 400px;
 }
+
+body {
+  padding: 50px 100px;
+}
+
+div {
+  margin: 20px;
+}
