@@ -34,8 +34,10 @@ class App extends React.Component<AppProps, AppState> {
       <div>
         <form onSubmit={e => this.handleSubmit(e)}>
           <div>
-            <Img buffer={this.state.inputImage} />
-            <input type="button" onClick={() => this.refreshInputImage()} value="refresh" />
+            <Img
+              className="input-image"
+              buffer={this.state.inputImage}
+              onClick={() => this.refreshInputImage()} />
           </div>
           <div>
             <textarea
