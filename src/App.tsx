@@ -12,6 +12,7 @@ interface AppState {
   inputImage: Buffer | null;
   message: string,
   outputImage: Buffer | null;
+  download?: string;
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -21,6 +22,7 @@ class App extends React.Component<AppProps, AppState> {
       inputImage: null,
       message: 'Write text to hide in a GIF...',  // TODO: Make the placeholder disappear.
       outputImage: null,
+      download: undefined,
     }
   }
 
@@ -55,7 +57,7 @@ class App extends React.Component<AppProps, AppState> {
           borderStyle: 'dashed',
           borderRadius: 5,
         }}>
-          <Img buffer={this.state.outputImage} download="encrypted.gif" />
+          <Img buffer={this.state.outputImage} download={this.state.download} />
         </Dropzone>
       </div>
     );
@@ -68,14 +70,14 @@ class App extends React.Component<AppProps, AppState> {
   handleSubmit(e: React.SyntheticEvent<any>) {
     e.preventDefault();
     const encoded = stego.encode(this.state.inputImage!, this.state.message);
-    this.setState({ outputImage: encoded });
+    this.setState({ outputImage: encoded, download: "encrypted.gif" });
   }
 
   onDecrypt(files) {
     const file = files[0];
     readAsArrayBuffer(file).then(image => {
       const message = stego.decode(image);
-      this.setState({ message, outputImage: image });
+      this.setState({ message, outputImage: image, download: undefined });
     });
   }
 
