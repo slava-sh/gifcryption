@@ -3,7 +3,7 @@ import './App.css';
 import * as stego from './stego';
 import * as Giphy from 'giphy-api';
 import Img from './Img';
-import ImageUploader from 'react-images-upload';
+import Dropzone from 'react-dropzone';
 
 interface AppProps {
 }
@@ -47,18 +47,9 @@ class App extends React.Component<AppProps, AppState> {
             <input type="submit" value="encrypt" />
           </div>
         </form>
-        <div>
-          <Img buffer={this.state.outputImage} download="encrypted.gif" />
-        </div>
-        <div>
-          decode:
-          <ImageUploader
-            withIcon={false}
-            buttonText='Choose images'
-            onChange={files => this.onDecrypt(files)}
-            imgExtension={['.gif']}
-            maxFileSize={5242880} />
-        </div>
+        <Dropzone onDrop={files => this.onDecrypt(files)}>
+          <Img buffer={this.state.outputImage} />
+        </Dropzone>
       </div>
     );
   }
@@ -77,7 +68,7 @@ class App extends React.Component<AppProps, AppState> {
     const file = files[0];
     readAsArrayBuffer(file).then(image => {
       const message = stego.decode(image);
-      this.setState({ message });
+      this.setState({ message, outputImage: image });
     });
   }
 

@@ -29,7 +29,8 @@ class Img extends React.Component<ImgProps, ImgState> {
 
   render() {
     const url = this.state.url || '';
-    const img = <img {...this.props} src={url} />;
+    const { buffer, ...otherProps } = this.props;
+    const img = <img {...otherProps} src={url} />;
     return this.props.download ?
       <a href={url} download={this.props.download} target="_blank">{img}</a> :
       img;
