@@ -5,3 +5,7 @@ img {
 .input-image {
   cursor: pointer;
 }
+
+.dropzone {
+  width: 400px;
+}

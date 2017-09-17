@@ -47,7 +47,14 @@ class App extends React.Component<AppProps, AppState> {
             <input type="submit" value="encrypt" />
           </div>
         </form>
-        <Dropzone onDrop={files => this.onDecrypt(files)}>
+        <Dropzone onDrop={files => this.onDecrypt(files)} style={{
+          width: 400,
+          height: 400,
+          borderWidth: 2,
+          borderColor: '#666',
+          borderStyle: 'dashed',
+          borderRadius: 5,
+        }}>
           <Img buffer={this.state.outputImage} download="encrypted.gif" />
         </Dropzone>
       </div>
