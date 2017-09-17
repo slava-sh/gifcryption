@@ -36,23 +36,23 @@ function skip_gif(image: Gif): Buffer {
   var background = buf[p++];
   buf[p++];  // Pixel aspect ratio (unused?).
 
-  var global_palette_offset = null;
+  var global_palette_offset: any = null;
 
   if (global_palette_flag) {
     global_palette_offset = p;
     p += num_global_colors * 3;  // Seek past palette.
   }
 
-  var loop_count = null;
+  var loop_count: any = null;
 
   var no_eof = true;
 
-  var frames = [ ];
+  var frames: any = [];
 
   var delay = 0;
-  var transparent_index = null;
+  var transparent_index: any = null;
   var disposal = 0;  // 0 - No disposal specified.
-  var loop_count = null;
+  var loop_count: any = null;
 
   while (no_eof && p < buf.length) {
     switch (buf[p++]) {
