@@ -67,8 +67,8 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   refreshInputImage() {
-    const giphy = Giphy();
-    giphy.random({rating: 'g'})
+    const giphy = Giphy({ https: true });
+    giphy.random({ rating: 'g' })
       .then(response => response.data.image_url)
       .then(url => fetchBuffer(url))
       .then(buf => this.setState({ inputImage: buf }));
