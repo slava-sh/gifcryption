@@ -59,7 +59,7 @@ class App extends React.Component<AppProps, AppState> {
               borderStyle: 'dashed',
               borderRadius: 5,
             }}>
-              Drop here to decrypt...
+              {!this.state.outputImage && 'Drop here to decrypt...'}
               <Img buffer={this.state.outputImage} download={this.state.download} />
             </Dropzone>
           </div>
