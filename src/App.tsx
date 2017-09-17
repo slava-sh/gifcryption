@@ -8,50 +8,68 @@ interface AppProps {
 }
 
 interface AppState {
-  image: Buffer | null;
+  inputImage: Buffer | null;
+  message: string,
+  outputImage: Buffer | null;
 }
 
 class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      image: null,
+      inputImage: null,
+      message: '',
+      outputImage: null,
     }
     fetchBuffer(require('./test.gif'))
-      .then(buf => this.setState({ image: buf }));
+      .then(buf => this.setState({ inputImage: buf }));
   }
 
   componentWillMount() {
-    this.refreshImage();
-  }
-
-  refreshImage() {
-    const giphy = Giphy();
-    giphy.random({rating: 'g'})
-      .then(response => response.data.image_url)
-      .then(url => fetchBuffer(url))
-      .then(buf => this.setState({ image: buf }));
+    this.refreshInputImage();
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <div>
+        <form onSubmit={e => this.handleSubmit(e)}>
+          <div>
+            <Img buffer={this.state.inputImage} />
+            <input type="button" onClick={() => this.refreshInputImage()} value="refresh" />
+          </div>
+          <div>
+            <textarea
+              value={this.state.message}
+              onChange={e => this.updateMessage(e.target.value)} />
+          </div>
+          <div>
+            <input type="submit" value="encrypt" />
+          </div>
+        </form>
         <div>
-          <Img buffer={this.state.image} />
-          <input type="button" onClick={() => this.refreshImage()} value="refresh" />
+          <Img buffer={this.state.outputImage} download="encrypted.gif" />
         </div>
-        <div>
-          <textarea name="message" />
-        </div>
-        <div>
-          <input type="submit" value="encrypt" />
-        </div>
-      </form>
+      </div>
     );
+  }
+
+  updateMessage(message: string) {
+    this.setState({ message });
   }
 
   handleSubmit(e: React.SyntheticEvent<any>) {
     e.preventDefault();
+    const image = Buffer.from(this.state.inputImage!);
+    const encoded = stego.encode(image, this.state.message);
+    this.setState({ outputImage: encoded });
+  }
+
+  refreshInputImage() {
+    const giphy = Giphy();
+    giphy.random({rating: 'g'})
+      .then(response => response.data.image_url)
+      .then(url => fetchBuffer(url))
+      .then(buf => this.setState({ inputImage: buf }));
   }
 }
 

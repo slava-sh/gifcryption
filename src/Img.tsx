@@ -2,6 +2,7 @@ import * as React from 'react';
 
 interface ImgProps {
   buffer: Buffer | null;
+  download?: string;
 }
 
 interface ImgState {
@@ -25,9 +26,11 @@ class Img extends React.Component<ImgProps, ImgState> {
   }
 
   render() {
-    return (
-      <img src={this.state.url || ''} />
-    );
+    const url = this.state.url || '';
+    const img = <img src={url} />;
+    return this.props.download ?
+      <a href={url} download={this.props.download}>{img}</a> :
+      img;
   }
 }
 

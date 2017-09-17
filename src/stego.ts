@@ -1,14 +1,14 @@
 type Gif = Buffer;
 
-export function encode(image: Gif, message: string, key: Gif | null): Gif {
-  if (key !== null) {
+export function encode(image: Gif, message: string, key?: Gif): Gif {
+  if (key) {
     throw new Error('key not supported');
   }
   return Buffer.concat([image, Buffer.from(message)]);
 }
 
-export function decode(image: Gif, key: Gif | null): string {
-  if (key !== null) {
+export function decode(image: Gif, key?: Gif): string {
+  if (key) {
     throw new Error('key not supported');
   }
   return skip_gif(image).toString();
