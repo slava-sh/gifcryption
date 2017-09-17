@@ -53,9 +53,9 @@ class App extends React.Component<AppProps, AppState> {
         <div>
           decode:
           <ImageUploader
-            withIcon={true}
+            withIcon={false}
             buttonText='Choose images'
-            onChange={this.onDecrypt}
+            onChange={files => this.onDecrypt(files)}
             imgExtension={['.gif']}
             maxFileSize={5242880} />
         </div>
@@ -69,9 +69,16 @@ class App extends React.Component<AppProps, AppState> {
 
   handleSubmit(e: React.SyntheticEvent<any>) {
     e.preventDefault();
-    const image = Buffer.from(this.state.inputImage!);
-    const encoded = stego.encode(image, this.state.message);
+    const encoded = stego.encode(this.state.inputImage!, this.state.message);
     this.setState({ outputImage: encoded });
+  }
+
+  onDecrypt(files) {
+    const file = files[0];
+    readAsArrayBuffer(file).then(image => {
+      const message = stego.decode(image);
+      this.setState({ message });
+    });
   }
 
   refreshInputImage() {
@@ -86,14 +93,16 @@ class App extends React.Component<AppProps, AppState> {
 export default App;
 
 function fetchBuffer(url: string): Promise<Buffer> {
-  return fetch(url).then(response => {
-    return response.blob();
-  }).then(blob => new Promise<Buffer>((resolve, reject) => {
+  return fetch(url).then(response => response.blob()).then(readAsArrayBuffer);
+}
+
+function readAsArrayBuffer(blobOrFile) {
+  return new Promise<Buffer>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = function() {
-      resolve(this.result);
+      resolve(Buffer.from(this.result));
     };
     reader.onerror = reject;
-    reader.readAsArrayBuffer(blob);
-  }));
+    reader.readAsArrayBuffer(blobOrFile);
+  });
 }

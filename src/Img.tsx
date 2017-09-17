@@ -31,7 +31,7 @@ class Img extends React.Component<ImgProps, ImgState> {
     const url = this.state.url || '';
     const img = <img {...this.props} src={url} />;
     return this.props.download ?
-      <a href={url} download={this.props.download}>{img}</a> :
+      <a href={url} download={this.props.download} target="_blank">{img}</a> :
       img;
   }
 }
