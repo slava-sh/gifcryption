@@ -27,13 +27,18 @@ class Img extends React.Component<ImgProps, ImgState> {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.download &&
+      this.state.url !== null &&
+      this.state.url !== prevState.url) {
+      downloadURI(this.state.url, this.props.download);
+    }
+  }
+
   render() {
     const url = this.state.url || '';
-    const { buffer, ...otherProps } = this.props;
-    const img = <img {...otherProps} src={url} />;
-    return this.props.download ?
-      <a href={url} download={this.props.download} target="_blank">{img}</a> :
-      img;
+    const { buffer, download, ...otherProps } = this.props;
+    return <img {...otherProps} src={url} />;
   }
 }
 
@@ -48,4 +53,13 @@ function bufferToDataURL(buf: Buffer): Promise<string> {
     reader.onerror = reject;
     reader.readAsDataURL(new Blob([buf]));
   });
+}
+
+function downloadURI(uri, name) {
+  var link = document.createElement("a");
+  link.download = name;
+  link.href = uri;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }

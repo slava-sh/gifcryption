@@ -48,7 +48,7 @@ class App extends React.Component<AppProps, AppState> {
           </div>
         </form>
         <Dropzone onDrop={files => this.onDecrypt(files)}>
-          <Img buffer={this.state.outputImage} />
+          <Img buffer={this.state.outputImage} download="encrypted.gif" />
         </Dropzone>
       </div>
     );
