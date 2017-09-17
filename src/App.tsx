@@ -21,8 +21,6 @@ class App extends React.Component<AppProps, AppState> {
       message: '',
       outputImage: null,
     }
-    fetchBuffer(require('./test.gif'))
-      .then(buf => this.setState({ inputImage: buf }));
   }
 
   componentWillMount() {
@@ -34,15 +32,15 @@ class App extends React.Component<AppProps, AppState> {
       <div>
         <form onSubmit={e => this.handleSubmit(e)}>
           <div>
+            <textarea
+              value={this.state.message}
+              onChange={e => this.updateMessage(e.target.value)} />
+          </div>
+          <div>
             <Img
               className="input-image"
               buffer={this.state.inputImage}
               onClick={() => this.refreshInputImage()} />
-          </div>
-          <div>
-            <textarea
-              value={this.state.message}
-              onChange={e => this.updateMessage(e.target.value)} />
           </div>
           <div>
             <input type="submit" value="encrypt" />
